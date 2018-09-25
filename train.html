@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Train Scheduler</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <!-- <script src="https://www.gstatic.com/firebasejs/5.5.1/firebase.js"></script> -->
+    <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css" /> -->
+    
+</head>
+<body>
+   <div class="container">
+       <div class="jumbotron" >
+           <center><h1 id = "title" >
+               Train Scheduler
+                </h1>
+            </center>
+       </div>
+   <div id="outputTable">  
+       <h1>
+
+        cust output goes here
+       </h1>        
+    <table class="table">
+        <thead>
+          <tr>
+           
+            <th scope="col">Train Name </th>
+            <th scope="col">Destination</th>
+            <th scope="col">Frequency</th>
+             <th scope="col">Next Arrival</th>
+             <th scope="col">Minutes Away</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td id="trainName-display"></td>
+            <td id="destination-display"></td>
+            <td id="frequency-display"></td>
+            <td id ="nextArrival-display"></td>
+            <td id ="minutesAway-display"></td>
+            <td></td>
+          </tr>
+        <!--  <tr>
+            <th scope="row">2</th>
+            <td>Jacob</td>
+            <td>Thornton</td>
+            <td>@fat</td>
+          </tr>
+          <tr>
+            <th scope="row">3</th>
+            <td>Larry</td>
+            <td>the Bird</td>
+            <td>@twitter</td>
+          </tr>-->
+        </tbody>
+      </table>
+    </div>
+      <br>
+<div id= "custInput">
+
+        <div class="form-group row">
+                <label for="name-input" class="col-2 col-form-label" >Train Name</label>
+                <div class="col-12">
+                  <input class="form-control" type="text" value="" id="name-input">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="destination-input" class="col-2 col-form-label">Destination</label>
+                <div class="col-12">
+                  <input class="form-control" type="search" value="" id="destination-input">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="time-input" class="col-12 col-form-label">First train time(hh:mm)</label>
+                <div class="col-12">
+                  <input class="form-control" type="time" value="" id="time-input">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="minute-input" class="col-2 col-form-label">Frequency (min)</label>
+                <div class="col-12">
+                  <input class="form-control" type="text" value="" id="minute-input">
+                </div>
+                
+              </div>
+              <button class="btn btn-default" id="add-user" type="submit">Submit</button>
+
+</div>
+
+   </div>
+   <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+   <script src="https://www.gstatic.com/firebasejs/5.5.1/firebase.js"></script>
+   
+    <script src="train.js"></script>
+</body>
+</html>
