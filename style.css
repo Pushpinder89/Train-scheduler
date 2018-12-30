@@ -1,0 +1,28 @@
+body{
+    background-image: url("./images/Train3.png");
+    /* background-repeat: no-repeat; */
+  }
+  .table th,
+  td {
+    display: inline-block;
+    width: 16.575%;
+    margin-left: 2%;
+  }
+  #custInput{
+
+    /* margin-left: 25%; */
+    background-color: aquamarine;
+    margin-bottom: 15px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+  }
+  .jumbotron{
+    background-color: blue;
+    color:whitesmoke;
+    margin-bottom: 0%;
+  }
+  #output{
+    background-color:lightgoldenrodyellow;
+    color: blue;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+   /* overflow: scroll; */
+  }

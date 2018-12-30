@@ -1,3 +1,4 @@
+
   // Initialize Firebase
   var config = {
     apiKey: "AIzaSyDYozsicEZy2CLjVdkqRVIXmXS9iTYh8eE",
@@ -11,52 +12,74 @@
 
   var database = firebase.database();
 
-    // Initial Values
-    var trainName = "";
-    var destination = "";
-    var trainTime = 0;
-    var frequencyMinutes = "";
-    var minutesAway = "";
-
     // Capture Button Click
     $("#add-user").on("click", function(event) {
-      event.preventDefault();
+      // event.preventDefault();
 
       // Grabbed values from text-boxes
-      trainName = $("#name-input").val().trim();
-      destination = $("#destination-input").val().trim();
-      trainTime = $("#time-input").val().trim();
-      frequencyMinutes = $("#minute-input").val().trim();
+     var  trainName = $("#name-input").val().trim();
+     var destination = $("#destination-input").val().trim();
+     var  trainTime = $("#time-input").val().trim();
+     var  frequencyMinutes = $("#minute-input").val().trim();
 
       // Code for "Setting values in the database"
-      database.ref().set({
-        trainName: trainName,
-        destination: destination,
-        trainTime: trainTime,
-        frequencyMinutes: frequencyMinutes
+      database.ref().push({
+         train:trainName,
+         dest: destination,
+         time:trainTime,
+        freq: frequencyMinutes
       });
 
+        alert("Train added successfully, Thank You ! ");
+            $("#name-input").val().trim();
+            $("#destination-input").val().trim();
+             $("#time-input").val().trim();
+               $("#minute-input").val().trim();
     });
 
-    // Firebase watcher + initial loader HINT: .on("value")
-    database.ref().on("value", function(snapshot) {
+     database.ref().on("child_added", function(childSnapshot) { 
+      // Store everything into a variable.
+      var tName = childSnapshot.val().train;
+      var tDestination = childSnapshot.val().dest;
+      var fisrtTrainTime = childSnapshot.val().time;
+      var tFrequencyMinutes = childSnapshot.val().freq;
+    
+      var timeArr = fisrtTrainTime.split(":");
+      var timeOfFirstTrain = moment().hours(timeArr[0]).minutes(timeArr[1]);
+      var maxMoment = moment.max(moment(), timeOfFirstTrain);
+      var trainsMinutes;
+      var trainsArrival;
+    
+      // If the first train is later than the current time, sent arrival to the first train time
+      if (maxMoment === timeOfFirstTrain) {
+        trainsArrival = timeOfFirstTrain.format("hh:mm A");
+        trainsMinutes = timeOfFirstTrain.diff(moment(), "minutes");
+      } else {
+    
+        // Calculate the minutes until arrival using hardcore math
+        // To calculate the minutes till arrival, take the current time in unix subtract the FirstTrain time
+        // and find the modulus between the difference and the frequency.
+        var differenceTimes = moment().diff(timeOfFirstTrain, "minutes");
+        var tRemainder = differenceTimes % tFrequencyMinutes;
+        trainsMinutes = tFrequencyMinutes - tRemainder;
+        // To calculate the arrival time, add the tMinutes to the current time
+        trainsArrival = moment().add(trainsMinutes, "m").format("hh:mm A");
+      }
+        // Create the new row
+  var newRow = $("<tr>").append(
+    $("<td>").text(tName),
+    $("<td>").text(tDestination),
+    $("<td>").text("Every" + " " + tFrequencyMinutes + " " + "minutes"),
+    $("<td>").text(trainsArrival),
+    $("<td>").text(trainsMinutes)
+    
+    // $("<td>").text(empRate),
+    // $("<td>").text(empBilled)
+  );
 
-      // Log everything that's coming out of snapshot
-      console.log(snapshot.val());
-      console.log(snapshot.val().trainName);
-      console.log(snapshot.val().destination);
-      console.log(snapshot.val().trainTime);
-      console.log(snapshot.val().frequencyMinutes);
+  $(".table > tbody").append(newRow);
+  });
 
-      // Change the HTML to reflect
-      $("#trainName-display").text(snapshot.val().trainName);
-      $("#destination-display").text(snapshot.val().destination);
-      $("#frequency-display").text(snapshot.val().trainTime);
-      $("#nextArrival-display").text(snapshot.val().frequencyMinutes);
-     // $("#minutesAway-display").text(snapshot.val().comment);
+     
 
-      // Handle the errors
-    }, function(errorObject) {
-      console.log("Errors handled: " + errorObject.code);
-    });
-
+   
